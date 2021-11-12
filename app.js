@@ -1,6 +1,7 @@
 
 const VIDEO_LENGTH = document.querySelector('.video_length'),
 VIDEO_SPEED = document.querySelector('.video_speed'),
+VIDEO_SPEED_INDICATOR = document.querySelector('.speed_indicator')
 TOTAL_DURATION = document.querySelector('.total_duration'),
 CALCULATED_DURATION = document.querySelector('.calculated_duration')
 SAVED_TIME = document.querySelector('.saved_time')
@@ -26,6 +27,7 @@ VIDEO_LENGTH.addEventListener('input', (e) => {
 
 VIDEO_SPEED.addEventListener('input', (e) => {
   video_speed = e.target.value
+  VIDEO_SPEED_INDICATOR.innerHTML = `${video_speed}x`
   console.log(e.target.value)
   updateUi(e)
 })
@@ -36,17 +38,26 @@ ADD_BUTTON.addEventListener('click', () => {
   addToList(video_length, video_speed, random_num)
   
   const li = document.createElement('li')
+  const deleteCard = document.createElement('div')
 
-  let saved_time = video_length-video_length/video_speed,
-  calculated_duration = video_length/video_speed
-
+  deleteCard.setAttribute('class', 'delete-card')
+  deleteCard.innerHTML=`del`
+  
+  let saved_time = video_length-video_length/video_speed
+  let calculated_duration = video_length/video_speed
+  
   li.innerHTML = `
-      <h2>Aproximated duration at (${video_speed}x): ${calculated_duration.toFixed(2)} mins.</h2>
-      <p>Original duration: ${video_length.toFixed(2)}</p>
-      <p>Time saved: ${calculated_duration.toFixed(2)}</p>
+  <div class='content-card'>
+    <h2>Aproximated duration at (${video_speed}x): ${calculated_duration.toFixed(2)} mins.</h2>
+    <p>Original duration: ${parseFloat(video_length).toFixed(2)}</p>
+    <p>Time saved: ${saved_time.toFixed(2)}</p>
+  </div>
   `
+
+  li.appendChild(deleteCard)
   li.setAttribute('id', random_num)
-  li.addEventListener('click', (e) => {
+
+  deleteCard.addEventListener('click', (e) => {
     // e.target.parentNode.removeChild(e.target)
     e.target.closest('li').remove()
 
@@ -57,9 +68,7 @@ ADD_BUTTON.addEventListener('click', () => {
     calculateTotalDuration()
     calculateTotalAproximated()
     calculateTotalSavedTime()
-
-    // console.table(video_list)
-    
+ 
   })
 
   calculateTotalDuration()
@@ -68,7 +77,6 @@ ADD_BUTTON.addEventListener('click', () => {
  
   VIDEO_LIST.appendChild(li)
 
-  // console.log(video_list)
 })
 
 function calculateTotalDuration() {
@@ -143,9 +151,11 @@ function addToList(video_length, video_speed, id) {
 
 }
 
+// function that runs on the start of the program
 (function() {
   console.log('the script started')
   VIDEO_LENGTH.value = 1
   VIDEO_SPEED.value = 1
+  VIDEO_SPEED_INDICATOR.innerHTML = `${video_speed}x`
   updateUi()
 }) ()

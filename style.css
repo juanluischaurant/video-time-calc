@@ -58,6 +58,7 @@ body {
 
 .list h2 {
 	font-size: 1rem;
+	margin-top: 4px;
 	margin-bottom: 4px;
 }
 
@@ -68,4 +69,44 @@ body {
 .total {
 	display: flex;
 	flex-direction: column;
+}
+
+li {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: row;
+	transition: transform 250ms, opacity 400ms;
+}
+
+li:hover {
+	/* transform: translateX(10px); */
+	/* opacity: 0; */
+}
+
+li:hover h2 {
+	text-decoration: underline;
+}
+li:hover .delete-card {
+	display: inline;
+}
+
+.delete-card {
+	margin-top: 2px;
+	margin-left: 8px;
+	cursor: pointer;
+	display: none;
+	border-radius: 15px;
+	background: rgb(193, 49, 50);
+	width: 40px;
+	height: 20px;
+	text-align: center;
+	padding-top: 4px;
+	color: rgb(255, 233, 233);
+
+	font-size: 0.8em;
+}
+
+.animated-container {
+	/*...*/
+	transition: opacity 0.2s, visibility 0.2s, margin-top 0s 0.2s;
 }
