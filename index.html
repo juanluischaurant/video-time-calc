@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container shadow1">
+    <button class='add'>add</button>
+    <div class="data">
+      <span>Video Length:</span>
+      <input class="video_length" type="text">
+      <span>Speed:</span>
+      <input class='video_speed' type="range" step="0.5" min="1" max="4">
+    </div>
+
+    <div class="result">
+      <span class="total_duration">Total Duration:</span>
+      <span class="calculated_duration">Aproximated Duration at (Nx):</span>
+      <span class="saved_time">Saved Time:</span>
+    </div>
+
+    <ul class="list">
+
+    </ul>
+  </div>
+
+  <script src="/app.js" />
+</body>
+</html>
