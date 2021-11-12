@@ -12,7 +12,7 @@ const DURATION_SUM = document.querySelector('.duration_sum')
 const APROXIMATED_SUM = document.querySelector('.aproximated_sum')
 const SAVED_SUM = document.querySelector('.saved_sum')
 
-let video_length = 1
+let video_length = 1,
 video_speed = 1
 
 let video_list = [
@@ -37,10 +37,13 @@ ADD_BUTTON.addEventListener('click', () => {
   
   const li = document.createElement('li')
 
+  let saved_time = video_length-video_length/video_speed,
+  calculated_duration = video_length/video_speed
+
   li.innerHTML = `
-      <h2>Aproximated duration at (1x): ${video_length/video_speed}</h2>
-      <p>Original duration: ${video_length}</p>
-      <p>Time saved: ${video_length-video_length/video_speed}</p>
+      <h2>Aproximated duration at (${video_speed}x): ${calculated_duration.toFixed(2)} mins.</h2>
+      <p>Original duration: ${video_length.toFixed(2)}</p>
+      <p>Time saved: ${calculated_duration.toFixed(2)}</p>
   `
   li.setAttribute('id', random_num)
   li.addEventListener('click', (e) => {
@@ -75,6 +78,7 @@ function calculateTotalDuration() {
     return i.length
   })
   .reduce((prev, next) =>prev+next, 0)
+  .toFixed(2)
   + ' minutes'  
 }
 
@@ -85,6 +89,7 @@ function calculateTotalAproximated() {
     return i.calculatedDuration
   })
   .reduce((prev, next) =>prev+next, 0)
+  .toFixed(2)
   + ' minutes'
 
 }
@@ -96,15 +101,19 @@ function calculateTotalSavedTime() {
     return i.savedTime
   })
   .reduce((prev, next) =>prev+next, 0)
+  .toFixed(2)
   + ' minutes'
 }
 
 
 function updateUi(e) {
-  TOTAL_DURATION.textContent = `Total duration: ${video_length}`
+  let saved_time = video_length-video_length/video_speed,
+  calculated_duration = video_length/video_speed
+
+  TOTAL_DURATION.textContent = `Total duration: ${parseFloat(video_length).toFixed(2)} minutes`
   // console.log(e)
-  CALCULATED_DURATION.textContent =   `Aproximated duration at (${video_speed}x): ${video_length/video_speed}`
-  SAVED_TIME.textContent = `Time saved: ${video_length-video_length/video_speed}`
+  CALCULATED_DURATION.textContent =   `Aproximated duration at (${video_speed}x): ${calculated_duration.toFixed(2)} minutes`
+  SAVED_TIME.textContent = `Time saved: ${saved_time.toFixed(2)} minutes`
 }
 
 function updateVideoList() {
