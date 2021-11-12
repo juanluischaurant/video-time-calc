@@ -1,4 +1,9 @@
+html {
+	height: fit-content;
+}
 body {
+	padding: 16% 0;
+	margin: 0;
 	background: rgb(6, 4, 36);
 	background: linear-gradient(
 		180deg,
@@ -6,7 +11,8 @@ body {
 		rgba(17, 122, 151, 1) 100%
 	);
 
-	height: 100vh;
+	height: 100%;
+	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -29,8 +35,10 @@ body {
 	);
 
 	width: 50%;
-	height: 300px;
+	height: fit-content;
 	border-radius: 15px;
+
+	/* margin: 255px auto; */
 
 	padding: 35px;
 
@@ -55,4 +63,9 @@ body {
 
 .list p {
 	margin: 2px 0;
+}
+
+.total {
+	display: flex;
+	flex-direction: column;
 }

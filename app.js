@@ -8,6 +8,10 @@ SAVED_TIME = document.querySelector('.saved_time')
 const ADD_BUTTON = document.querySelector('.add'),
 VIDEO_LIST = document.querySelector('.list')
 
+const DURATION_SUM = document.querySelector('.duration_sum')
+const APROXIMATED_SUM = document.querySelector('.aproximated_sum')
+const SAVED_SUM = document.querySelector('.saved_sum')
+
 let video_length = 1
 video_speed = 1
 
@@ -27,7 +31,9 @@ VIDEO_SPEED.addEventListener('input', (e) => {
 })
 
 ADD_BUTTON.addEventListener('click', () => {
-  addToList(video_length, video_speed)
+  const random_num = Math.random()
+
+  addToList(video_length, video_speed, random_num)
   
   const li = document.createElement('li')
 
@@ -36,22 +42,62 @@ ADD_BUTTON.addEventListener('click', () => {
       <p>Original duration: ${video_length}</p>
       <p>Time saved: ${video_length-video_length/video_speed}</p>
   `
+  li.setAttribute('id', random_num)
   li.addEventListener('click', (e) => {
     // e.target.parentNode.removeChild(e.target)
     e.target.closest('li').remove()
+
+    video_list = video_list.filter((v, i, arr) => {
+      return v['id'] !== random_num
+    })
+
+    calculateTotalDuration()
+    calculateTotalAproximated()
+    calculateTotalSavedTime()
+
+    // console.table(video_list)
+    
   })
-  
+
+  calculateTotalDuration()
+  calculateTotalAproximated()
+  calculateTotalSavedTime()
+ 
   VIDEO_LIST.appendChild(li)
 
-  // document.querySelectorAll('.tittle').forEach(item => {
-  //   item.addEventListener('click', (e) => {
-  //     // e.target.parentNode.removeChild(e.target)
-  //     e.target.closest('li').remove()
-  //   })
-  // })
-
+  // console.log(video_list)
 })
 
+function calculateTotalDuration() {
+
+  DURATION_SUM.innerHTML = 'Dur. Total: ' + video_list
+  .map((i) => {
+    return i.length
+  })
+  .reduce((prev, next) =>prev+next, 0)
+  + ' minutes'  
+}
+
+function calculateTotalAproximated() {
+   
+  APROXIMATED_SUM.innerHTML = 'Aprox. Total: ' + video_list
+  .map((i) => {
+    return i.calculatedDuration
+  })
+  .reduce((prev, next) =>prev+next, 0)
+  + ' minutes'
+
+}
+
+function calculateTotalSavedTime() {
+
+  SAVED_SUM.innerHTML = 'Saved Total: ' + video_list
+  .map((i) => {
+    return i.savedTime
+  })
+  .reduce((prev, next) =>prev+next, 0)
+  + ' minutes'
+}
 
 
 function updateUi(e) {
@@ -70,13 +116,22 @@ function updateVideoList() {
 
 }
 
-function addToList(video_length, video_speed) {
+function addToList(video_length, video_speed, id) {
+  video_length = parseFloat(video_length)
+  video_speed = parseFloat(video_speed)
+  calculated_duration = video_length/video_speed
+  saved_time = video_length-calculated_duration
+
   const data = [{
-    length: parseFloat(video_length),
-    speed: parseFloat(video_speed)
+    id: id,
+    length: video_length,
+    speed: video_speed,
+    savedTime: saved_time,
+    calculatedDuration: calculated_duration
   }]
 
   video_list = video_list.concat(data)
+
 }
 
 (function() {
